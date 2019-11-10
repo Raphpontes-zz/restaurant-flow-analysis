@@ -1,0 +1,24 @@
+*.o
+*.dSYM
+*.csv
+*.out
+*.png
+*.jpg
+*.pyc
+old/
+mnist/
+data/
+caffe/
+grasp/
+images/
+opencv/
+convnet/
+decaf/
+submission/
+darknet
+.fuse*
+
+#Ignore weight files
+*.weights
+#Ignore outputs folder
+outputs/
