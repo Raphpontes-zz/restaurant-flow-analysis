@@ -10,13 +10,24 @@ import paho.mqtt.client as mqtt
 import json
 import time
 import datetime
-
+import argparse
 
 offline = 0
 image_url = "http://smartcampus.prefeitura.unicamp.br/cameras/cam_ra.jpg"
 time_new_picture = 10
 
 def main():
+    
+    parser = argparse.ArgumentParser(description='This program intends to measure restaurant line')
+
+    parser.add_argument('--mode', '-m', dest='mode',
+                        help='Select mode to get images, online or offline')
+    parser.add_argument('--sample', '-s', dest='img_input',
+                        help='Classify one image for test')
+    parser.add_argument('--thresh', '-t', dest='thresh_value', default = 0.15,
+                        help='Select threshold for neural network classification')
+    args = parser.parse_args()
+    thresh_value = args.thresh_value
     
     if offline:
         BUFFER = 15
@@ -30,15 +41,24 @@ def main():
         os.mkdir('outputs')
     if not os.path.exists('inputs'):
         os.mkdir('inputs')
+    
+    if not os.path.exists('inputs/number.txt'):
+        os.system('touch inputs/number.txt')
+        number_file = open('inputs/number.txt','w')
+        number_file.write(str(0))
+        number_file.close()
         
-    count = 0
+    number_file = open('inputs/number.txt','r')
+    number = int(number_file.read())
+    number_file.close()
+    count = number
     now = datetime.datetime.now()
     hour = now.hour
     minute = now.minute
     old_minute = minute
     
-    #while True:
-    while hour >= 23 and hour <= 24 and minute > 30 and minute < 50:
+    while True:
+    #while hour >= 23 and hour <= 24 and minute > 30 and minute < 50:
 
         time_start = time.time()
         if offline:
@@ -64,7 +84,7 @@ def main():
 
             ##Passa a imagem de entrada para a rede neural
             out_img = 'outputs/out' + str(count).zfill(4) + '.jpg'
-            bashCommand = "./darknet detect cfg/yolov3-tiny.cfg yolov3-tiny.weights %s -thresh 0.15 -out %s" % (input_img,out_img) 
+            bashCommand = "./darknet detect cfg/yolov3-tiny.cfg yolov3-tiny.weights %s -thresh %s -out %s" % (input_img, thresh_value, out_img)
             process = Popen(bashCommand.split(), stdout=PIPE)
             output, error = process.communicate()
 
@@ -111,8 +131,10 @@ def main():
             client.publish("data/ic4hlicdjr83/pub/fila_ra", 
                             json.dumps({"Status da fila": status_fila, "Numero de pessoas": people_counter, "Numero de pessoas a esquerda": left_line_counter, "Numero de pessoas a direita": right_line_counter, "Timestamp": timestamp}))
             
-            
             count += 1
+            number_file = open('inputs/number.txt','w')
+            number_file.write(str(count))
+            number_file.close()
             now = datetime.datetime.now()
             hour = now.hour
             minute = now.minute

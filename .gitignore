@@ -22,3 +22,5 @@ darknet
 *.weights
 #Ignore outputs folder
 outputs/
+#Ignore inputs folder
+inputs/
