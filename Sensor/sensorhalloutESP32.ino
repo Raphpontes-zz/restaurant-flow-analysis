@@ -16,31 +16,27 @@ int pinosinal= 4;
 int pinoled = 2;
 // Porta ligada ao pino SINAL do sensor
 
-// Nome do wifi e senha
-#define ssid "aula-ic3"
- #define password "iotic@2019"
-// #define ssid "MyASUSR"
-//#define password "12345678"
+// Wifi and Password
+#define ssid "networkname"
+#define password "password"
 
 
-#define SERVER "mqtt.demo.konkerlabs.net"
+#define SERVER "mqtt.your.server.net"
 #define SERVERPORT 1883
 
 //ESP 1
-//#define username "bsrpd5lh126i"
-//#define passwordmqtt "FDbsQ8Bh921F"
-//ESP 2
-#define username "5u0pkst320l4"
-#define passwordmqtt "C3qQKvumhgXD"
+#define username "usernameontheserver"
+#define passwordmqtt "password"
 
 
-#define userID "raphael2"
+
+#define userID "personalID"
 
 // topicos
 
 // ultima parte de topico eh o nome do usuario
-#define TOPIC1 "data/bsrpd5lh126i/pub/1"
-#define TOPIC2 "data/5u0pkst320l4/pub/1"
+#define TOPIC1 "data/sadasdsad/pub/1"
+
 
 const long utcOffsetInSeconds = -10600;
 WiFiUDP ntpUDP;
