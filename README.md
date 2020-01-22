@@ -32,7 +32,11 @@ For sensor hall, it is necessary to install some libraries on your arduino plata
 
 ## Vision
 
+For vision, the two most important requirements are:
 
+  1) Python - Programming language used for the scripts, which organize processing and results.
+
+  2) OpenCV - Main library used to work with images for operations such as reading and writing.
 
 
 # References
@@ -42,3 +46,5 @@ This project uses other important projects, such as:
 1) Yolo Tiny Darknet-nnpack - https://github.com/zxzhaixiang/darknet-nnpack
 
 2) NNPACK - https://github.com/shizukachan/NNPACK
+
+3) OpenCV DNN and MobileNet-SSD - https://github.com/rdeepc/ExploreOpencvDnn

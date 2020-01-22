@@ -60,7 +60,6 @@ def main():
 
 
     while True:
-    #while hour >= 23 and hour <= 24 and minute > 30 and minute < 50:
         try:
             time_start = time.time()
             if offline:
@@ -94,9 +93,7 @@ def main():
 
                 ##Passa a imagem de entrada para a rede neural
                 out_img = 'outputs/out' + str(count).zfill(4) + '.jpg'
-                # bashCommand = "./darknet detect cfg/yolov3-tiny.cfg yolov3-tiny.weights %s -thresh %s -out %s" % (input_img, thresh_value, out_img)
                 bashCommand = "./darknet detect cfg/yolov3.cfg yolov3.weights %s -thresh %s -out %s" % (input_img, thresh_value, out_img)
-                print bashCommand.split()
                 process = Popen(bashCommand.split(), stdout=PIPE)
                 output, error = process.communicate()
 
